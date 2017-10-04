@@ -43,8 +43,9 @@ function listOneAccount(owner, bank) {
     }
 }
 
-const transactions = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
-const bank = Bank.fromTransactions(transactions);
+const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
+const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
+const bank = Bank.fromTransactions(transactions2014, transactions2015);
 displayWelcomeMessage();
 while (true) {
     processCommand(bank);

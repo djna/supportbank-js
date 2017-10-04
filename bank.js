@@ -5,9 +5,11 @@ export default class Bank {
         this.accounts = {};
     }
 
-    static fromTransactions(transactions) {
+    static fromTransactions(...transactionLists) {
         const bank = new Bank();
-        transactions.forEach(transaction => bank.addTransaction(transaction));
+        transactionLists.forEach(transactions => transactions.forEach(transaction =>
+            bank.addTransaction(transaction)
+        ));
         return bank;
     }
 
