@@ -15,5 +15,10 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "del-cli": "^1.1.0"
+  },
+  "dependencies": {
+    "csv": "^1.1.1",
+    "moment": "^2.18.1",
+    "readline-sync": "^1.4.7"
   }
 }
