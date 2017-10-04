@@ -2,6 +2,7 @@ import log4js from 'log4js';
 import { readFileSync } from 'fs';
 import CSVParser from './csvParser';
 import JSONParser from './jsonParser';
+import XMLParser from './xmlParser';
 
 const logger = log4js.getLogger('transactionReader.js');
 
@@ -10,6 +11,8 @@ function getParser(filePath) {
         return new CSVParser();
     } else if (filePath.endsWith('.json')) {
         return new JSONParser();
+    } else if (filePath.endsWith('.xml')) {
+        return new XMLParser();
     } else {
         throw new Error('Unrecognized file type');
     }
@@ -40,14 +43,18 @@ export default function getTransactions(filePath, encoding) {
     const data = readFileSync(filePath, {encoding});
     const transactions = parser.getTransactions(data);
 
-    return transactions.filter((transaction, idx) => {
-        const errors = getValidationErrors(transaction);
-        if (errors.length === 0) {
-            return true;
-        } else {
-            logger.error(`Errors in transaction number ${idx} of ${filePath}:`, errors);
-            console.error(`\nWARNING! Skipping invalid transaction number ${idx} of ${filePath}: ${JSON.stringify(transaction)}`);
-            return false;
-        }
-    });
+    let invalidTransactions = [];
+    return {
+        validTransactions: transactions.filter((transaction, index) => {
+            const errors = getValidationErrors(transaction);
+            if (errors.length === 0) {
+                return true;
+            } else {
+                logger.error(`Errors in transaction number ${index} of ${filePath}:`, errors);
+                invalidTransactions.push({transaction, index, filePath});
+                return false;
+            }
+        }),
+        invalidTransactions
+    };
 }

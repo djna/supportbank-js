@@ -58,7 +58,11 @@ export default class ConsoleRunner {
 
     importTransactions(filePath) {
         try {
-            this.bank.addTransactions(getTransactions(filePath, 'utf-8'));
+            const transactions = getTransactions(filePath, 'utf-8');
+            this.bank.addTransactions(transactions.validTransactions);
+            transactions.invalidTransactions.forEach(transaction => {
+                console.error(`\nWARNING! Skipping invalid transaction number ${transaction.index} of ${transaction.filePath}: ${JSON.stringify(transaction.transaction)}`);
+            });
             console.log(`\nFinished importing transactions from ${filePath}`);
         } catch (e) {
             logger.error(e);
