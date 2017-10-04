@@ -8,14 +8,6 @@ export default class Bank {
         this.accounts = {};
     }
 
-    static fromTransactions(...transactionLists) {
-        const bank = new Bank();
-        transactionLists.forEach(transactions => transactions.forEach(transaction =>
-            bank.addTransaction(transaction)
-        ));
-        return bank;
-    }
-
     getOrCreateAccount(owner) {
         return this.accounts[owner] || (this.accounts[owner] = new Account(owner));
     }
@@ -24,5 +16,9 @@ export default class Bank {
         logger.debug('Adding transaction to bank:', transaction);
         this.getOrCreateAccount(transaction.from).addOutgoingTransaction(transaction);
         this.getOrCreateAccount(transaction.to).addIncomingTransaction(transaction);
+    }
+
+    addTransactions(transactions) {
+        transactions.forEach(transaction => this.addTransaction(transaction));
     }
 }
