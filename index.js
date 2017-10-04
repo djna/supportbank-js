@@ -1,6 +1,19 @@
+import log4js from 'log4js';
+
+log4js.configure({
+    appenders: {
+        file: { type: 'fileSync', filename: 'logs/debug.log' }
+    },
+    categories: {
+        default: { appenders: ['file'], level: 'debug'}
+    }
+});
+
 import getCSVTransactions from './csvreader';
 import Bank from './bank';
-import { getParsedCommand, LIST_ALL, LIST_ACCOUNT } from './command';
+import { getParsedCommand, LIST_ALL, LIST_ACCOUNT, EXIT } from './command';
+
+const logger = log4js.getLogger('index.js');
 
 function displayWelcomeMessage() {
     console.log('\nWelcome to SupportBank!');
@@ -9,7 +22,10 @@ function displayWelcomeMessage() {
 
 function processCommand(bank) {
     const command = getParsedCommand();
-    if (command.type === LIST_ALL) {
+    logger.info('Processing command:', command);
+    if (command.type === EXIT) {
+        process.exit(0);
+    } else if (command.type === LIST_ALL) {
         listAllAccounts(bank);
     } else if (command.type === LIST_ACCOUNT) {
         listOneAccount(command.account, bank);
@@ -43,6 +59,8 @@ function listOneAccount(owner, bank) {
     }
 }
 
+logger.info('SupportBank starting up');
+console.log('\nProcessing transactions...');
 const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
 const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
 const bank = Bank.fromTransactions(transactions2014, transactions2015);

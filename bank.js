@@ -1,4 +1,7 @@
+import log4js from 'log4js';
 import Account from './account';
+
+const logger = log4js.getLogger('bank.js');
 
 export default class Bank {
     constructor() {
@@ -18,6 +21,7 @@ export default class Bank {
     }
 
     addTransaction(transaction) {
+        logger.debug('Adding transaction to bank:', transaction);
         this.getOrCreateAccount(transaction.from).addOutgoingTransaction(transaction);
         this.getOrCreateAccount(transaction.to).addIncomingTransaction(transaction);
     }

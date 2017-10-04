@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "del-cli dist/**/*",
+    "clean": "del-cli dist/**/* logs/*",
     "build": "npm run clean && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start": "npm run build && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "csv": "^1.1.1",
+    "log4js": "^2.3.4",
     "moment": "^2.18.1",
     "readline-sync": "^1.4.7"
   }
