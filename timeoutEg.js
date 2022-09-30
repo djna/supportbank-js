@@ -7,20 +7,13 @@ function doWork(workWith){
     console.log(`ONE: x = ${x}`);
 
     setTimeout(
-      function() {
+      function callback() {
         console.log(`TWO: x = ${x}`);
         x += 100;
         console.log(`THREE: x = ${x}`);
         return x;
       }, 5 * 1000
     );
-
-    setTimeout(
-        function() {
-          console.log(`LATER: x = ${x}`);
-        }, 10 * 1000
-      );
-
 
     x++;
     console.log(`FOUR: x = ${x}`);

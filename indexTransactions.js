@@ -23,12 +23,10 @@ function listAllAccounts(transactions) {
 
 function listOneAccount(owner, transactions) {
     console.log(`\ntransactions for : ${owner}`);
-    // how ???
+    // *** how ???
 }
 
-
 const transactions = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
-
 
 displayWelcomeMessage();
 while (true) {
