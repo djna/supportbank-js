@@ -1,6 +1,6 @@
-import getCSVTransactions from './csvreader';
-import Bank from './bank';
-import { getParsedCommand, LIST_ALL, LIST_ACCOUNT } from './command';
+import getCSVTransactions from './csvreader.js';
+import Bank from './bank.js';
+import { getParsedCommand, LIST_ALL, LIST_ACCOUNT } from './command.js';
 
 function displayWelcomeMessage() {
     console.log('\nWelcome to SupportBank!');

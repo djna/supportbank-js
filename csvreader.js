@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
-import csvParseSync from 'csv-parse/lib/sync';
+import {parse as csvParseSync} from 'csv-parse/sync';
 import moment from 'moment';
-import Transaction from './transaction';
+import Transaction from './transaction.js';
 
 function parseRecordToTransaction(record) {
     return new Transaction(
