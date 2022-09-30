@@ -14,8 +14,6 @@ export default class Account {
     }
 
     get balance() {
-        const credits = this.incomingTransactions.reduce((acc, curr) => acc + curr.amount, 0);
-        const debits = this.outgoingTransactions.reduce((acc, curr) => acc + curr.amount, 0);
-        return credits - debits;
+      // *** add code here to obtain balance
     }
 }

@@ -11,7 +11,9 @@ export default class Bank {
     }
 
     addTransaction(transaction) {
-        this.getOrCreateAccount(transaction.from).addOutgoingTransaction(transaction);
-        this.getOrCreateAccount(transaction.to).addIncomingTransaction(transaction);
+        let fromAccount = this.getOrCreateAccount(transaction.from);
+        // *** add code here to add transaction  to account
+        
+        // *** add code here to do the same for to transaction.to
     }
 }
