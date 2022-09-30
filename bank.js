@@ -5,11 +5,6 @@ export default class Bank {
         this.accounts = {};
     }
 
-    static fromTransactions(transactions) {
-        const bank = new Bank();
-        transactions.forEach(transaction => bank.addTransaction(transaction));
-        return bank;
-    }
 
     getOrCreateAccount(owner) {
         return this.accounts[owner] || (this.accounts[owner] = new Account(owner));

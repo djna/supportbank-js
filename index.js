@@ -18,9 +18,9 @@ function processCommand(bank) {
 
 function listAllAccounts(bank) {
     console.log('\nAll accounts:');
-    Object.values(bank.accounts).forEach(account => {
-        const balance = account.balance;
-        console.log(`  ${account.owner} ${(balance < 0 ? 'owes' : 'is owed')} ${Math.abs(balance).toFixed(2)}`);
+    Object.values(bank.accounts).forEach( function(oneAccount){
+        console.log(`account ${oneAccount.owner}`);
+        // *** amend the output above to include the account balance
     });
 }
 
@@ -28,23 +28,22 @@ function listOneAccount(owner, bank) {
     const account = bank.accounts[owner];
     if (account !== undefined) {
         // Get the transactions sorted in date order
-        console.log(`\nAccount ${owner}:`);
-        const transactions = account.incomingTransactions.concat(account.outgoingTransactions);
-        transactions.sort((a, b) => a.date.isBefore(b.date) ? -1 : (a.date.isSame(b.date) ? 0 : 1));
-
-        // Display each transaction
-        transactions.forEach(transaction => {
-            const formattedDate = transaction.date.format('DD/MM/YYYY');
-            const formattedAmount = transaction.amount.toFixed(2);
-            console.log(`  ${formattedDate} - ${transaction.from} paid ${transaction.to} ${formattedAmount} for ${transaction.narrative}`)
-        });
+        console.log(`\nAccount ${owner}: *** NOT IMPLEMENTED ***`);
+        // *** add code here to get transactions for account
     } else {
         console.log(`\nThere is no account known in the name of ${owner}`);
     }
 }
 
+const bank = new Bank();
+
 const transactions = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
-const bank = Bank.fromTransactions(transactions);
+transactions.forEach(
+    function(transaction){
+        bank.addTransaction(transaction);
+    }
+);
+
 displayWelcomeMessage();
 while (true) {
     processCommand(bank);
