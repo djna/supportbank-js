@@ -1,5 +1,5 @@
 import log4js from 'log4js';
-import Account from './account';
+import Account from './account.js';
 
 const logger = log4js.getLogger('bank.js');
 
