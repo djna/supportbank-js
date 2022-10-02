@@ -33,7 +33,15 @@ function parseRecordToTransaction(record) {
 // PSEUDO: add pseudo code
 export default function getTransactions(filePath, encoding) {
     logger.info(`Loading CSV transactions from ${filePath}`);
-    const data = readFileSync(filePath, {encoding});
+
+    let data;
+    try {
+        data = readFileSync(filePath, {encoding});
+    } catch (e) {
+        logger.error(`Failed to read : ${filePath}, reason: ${e}`);
+        console.error(`\ERROR! failed to read ${filePath}: ${e}`);
+        return [];
+    }
 
     const parsedData = csvParseSync(data, {columns: true});
     let validTransactions = [];
