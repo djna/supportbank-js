@@ -22,7 +22,7 @@ function displayWelcomeMessage() {
 
 function processCommand(bank) {
     const command = getParsedCommand();
-    logger.info('Processing command:', command);
+    // TODO : log the command, info
     if (command.type === EXIT) {
         process.exit(0);
     } else if (command.type === LIST_ALL) {
@@ -32,14 +32,39 @@ function processCommand(bank) {
     }
 }
 
+// PSEUDO: Add pseudo code
 function listAllAccounts(bank) {
     console.log('\nAll accounts:');
-    Object.values(bank.accounts).forEach(account => {
+    let accountArray = Object.values(bank.accounts);
+
+    for ( let i = 0; i < accountArray.length; i++){
+        let account = accountArray[i];
+        const balance = account.balance();
+
+        let label;
+        if (balance < 0){
+            label = 'owes';
+        } else {
+            label = 'is owed'
+        }
+
+        // get the number to two decimal places ignoring the sign
+        let absoluteBalanceToTwoDecimalPlaces = Math.abs(balance).toFixed(2);
+        console.log(`  ${account.owner} ${label}} ${absoluteBalanceToTwoDecimalPlaces}`);
+    }
+
+    /* 
+    // alternative way of looping through accounts 
+    function displayOneAccount(account) {
         const balance = account.balance;
         console.log(`  ${account.owner} ${(balance < 0 ? 'owes' : 'is owed')} ${Math.abs(balance).toFixed(2)}`);
-    });
+    }
+    // for each will call displayOneAccount with each account in turn
+    accountArray.forEach( displayOneAccount );
+    */
 }
 
+// TODO: add pseudocode
 function listOneAccount(owner, bank) {
     const account = bank.accounts[owner];
     if (account !== undefined) {
@@ -59,8 +84,10 @@ function listOneAccount(owner, bank) {
     }
 }
 
-logger.info('SupportBank starting up');
+// TODO : log a startup message
 console.log('\nProcessing transactions...');
+
+// TODO : add pseudo code
 const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
 const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
 const bank = Bank.fromTransactions(transactions2014, transactions2015);
