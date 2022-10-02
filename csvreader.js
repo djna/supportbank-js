@@ -6,6 +6,7 @@ import Transaction from './transaction.js';
 
 const logger = log4js.getLogger('csvreader.js');
 
+// PSEUDO : add pseudo code
 function parseRecordToTransaction(record) {
     logger.debug('Record:', record);
 
@@ -29,9 +30,27 @@ function parseRecordToTransaction(record) {
     );
 }
 
+// PSEUDO: add pseudo code
 export default function getTransactions(filePath, encoding) {
     logger.info(`Loading CSV transactions from ${filePath}`);
     const data = readFileSync(filePath, {encoding});
+
+    const parsedData = csvParseSync(data, {columns: true});
+    let validTransactions = [];
+
+    for ( let i = 0 ; i < parsedData.length; i++){
+        logger.debug(`Parsing transaction number ${i} from ${filePath}`);
+        let record = parsedData[i];
+        try {
+            let transaction = parseRecordToTransaction(record);
+            validTransactions.push( transaction );
+        } catch (e) {
+            logger.error('Skipping transaction due to the following error: ', e);
+            console.error(`\nWARNING! Skipping invalid CSV transaction: ${JSON.stringify(record)}`);
+        } 
+    }
+    return validTransactions;
+    /* alternative implementation
     return csvParseSync(data, {columns: true}).reduce((validTransactions, record, idx) => {
         logger.debug(`Parsing transaction number ${idx} from ${filePath}`);
         try {
@@ -42,4 +61,5 @@ export default function getTransactions(filePath, encoding) {
         }
         return validTransactions;
     }, []);
+    */
 }

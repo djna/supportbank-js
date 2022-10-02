@@ -3,41 +3,38 @@ import Account from './account.js';
 
 const logger = log4js.getLogger('bank.js');
 
-export default class Bank {
-    constructor() {
-        this.accounts = {};
-    }
-
+export default function Bank() {
+    
+    this.accounts = {};
     
     // Receives one or more lists of transactions
-    // returns a new Bank holding all of the accounts in those transactions
+    // Stores the transactions as a list of accounts with their transactions
 
     // PSEUDO : ADD pseudo code
-    static fromTransactions(...transactionLists) {
-        const bank = new Bank();
+    this.loadTransactions = function(...transactionLists) {
 
         for ( let i = 0; i < transactionLists.length; i++){
             let oneList = transactionLists[i];
             for ( let t = 0; t < oneList.length; t++){
-                bank.addTransaction(oneList[t]);
+                this.addTransaction(oneList[t]);
             }
         }
 
         /* alternative implementation
         transactionLists.forEach(transactions => transactions.forEach(transaction =>
-            bank.addTransaction(transaction)
+            this.addTransaction(transaction)
         ));
         */
-        return bank;
+    
     }
 
     // PSEUDO : add pseudocode
-    getOrCreateAccount(owner) {
+    this.getOrCreateAccount = function(owner) {
         return this.accounts[owner] || (this.accounts[owner] = new Account(owner));
     }
 
     // PSEUDO : add pseudocode
-    addTransaction(transaction) {
+    this.addTransaction = function(transaction) {
         // TODO : debug log adding a transaction
         let fromAccount = this.getOrCreateAccount(transaction.from);
         fromAccount.addOutgoingTransaction(transaction);

@@ -50,7 +50,7 @@ function listAllAccounts(bank) {
 
         // get the number to two decimal places ignoring the sign
         let absoluteBalanceToTwoDecimalPlaces = Math.abs(balance).toFixed(2);
-        console.log(`  ${account.owner} ${label}} ${absoluteBalanceToTwoDecimalPlaces}`);
+        console.log(`  ${account.owner} ${label} ${absoluteBalanceToTwoDecimalPlaces}`);
     }
 
     /* 
@@ -64,14 +64,33 @@ function listAllAccounts(bank) {
     */
 }
 
-// TODO: add pseudocode
+// PSEUDO: add pseudocode
 function listOneAccount(owner, bank) {
+    // TODO : debug log 
     const account = bank.accounts[owner];
     if (account !== undefined) {
         // Get the transactions sorted in date order
         console.log(`\nAccount ${owner}:`);
         const transactions = account.incomingTransactions.concat(account.outgoingTransactions);
+        
+        // all sort functions must return -1, 0 or 1
+        // for less, equal and greater respectively
+        const sortByDate = function(a, b){
+            if ( a.date.isBefore(b.date) ) {
+                return -1;
+            } else if ( a.date.isSame(b.date) ) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        // array sort works directly on the array
+        transactions.sort(sortByDate);
+
+        /* Alternative, one-line implementation of sort
         transactions.sort((a, b) => a.date.isBefore(b.date) ? -1 : (a.date.isSame(b.date) ? 0 : 1));
+        */
 
         // Display each transaction
         transactions.forEach(transaction => {
@@ -84,13 +103,16 @@ function listOneAccount(owner, bank) {
     }
 }
 
-// TODO : log a startup message
+// TODO : info log a startup message
 console.log('\nProcessing transactions...');
 
-// TODO : add pseudo code
+// PSEUDO : add pseudo code
 const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
 const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
-const bank = Bank.fromTransactions(transactions2014, transactions2015);
+
+const bank = new Bank();
+bank.loadTransactions(transactions2014, transactions2015);
+
 displayWelcomeMessage();
 while (true) {
     processCommand(bank);
