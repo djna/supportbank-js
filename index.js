@@ -107,7 +107,7 @@ function listOneAccount(owner, bank) {
 console.log('\nProcessing transactions...');
 
 // PSEUDO : add pseudo code
-const transactions2014 = getCSVTransactions('resources/zTransactions2014.csv', 'utf-8');
+const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
 const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
 
 const bank = new Bank();
