@@ -19,6 +19,16 @@ export default class JSONParser {
 
     getTransactions(data) {
         logger.info('Parsing JSON transactions');
+
+        let rawDataList = JSON.parse(data);
+        let transactions = [];
+        for ( let i = 0; i < rawDataList.length; i++){
+            transactions.push(this.parseSingleTransaction(rawDataList[i]));
+        }
+        return transactions;
+
+        /* alternative
         return JSON.parse(data).map(this.parseSingleTransaction);
+        */
     }
 }
