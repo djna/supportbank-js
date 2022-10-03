@@ -5,6 +5,22 @@ import JSONParser from './jsonParser.js';
 
 const logger = log4js.getLogger('transactionReader.js');
 
+// create empty list of Transactions
+// for each raw transaction
+//     create new Transaction object
+//     add new transaction to list 
+
+// create empty Account list
+// for each transaction in list
+// if From Account is new
+//     create new Account and add to Account list
+// add Transaction to From Account outgoing transactions
+//
+// if To Account is new 
+//     create new Account and add to Account list
+// add Transaction to To Account incoming transactions
+
+
 function getParser(filePath) {
     if (filePath.endsWith('.csv')) {
         return new CSVParser();
