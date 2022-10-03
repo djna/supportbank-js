@@ -16,7 +16,7 @@ export default function Account(owner) {
 
     // returns the account balance
     // positive if we are owed money, negative if we owe the bank money
-    // PSEUDO: add pseudo code
+    
     this.balance = function() {
         this.incomingTransactions
         let credits = 0;

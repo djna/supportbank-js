@@ -9,9 +9,11 @@ log4js.configure({
     }
 });
 
-import getCSVTransactions from './csvreader.js';
-import Bank from './bank.js';
-import { getParsedCommand, LIST_ALL, LIST_ACCOUNT, EXIT } from './command.js';
+
+import Bank from './bank/bank.js';
+
+import ConsoleRunner from './consoleRunner.js';
+
 
 const logger = log4js.getLogger('index.js');
 
@@ -22,7 +24,7 @@ function displayWelcomeMessage() {
 
 function processCommand(bank) {
     const command = getParsedCommand();
-    // TODO : log the command, info
+    logger.into(command);
     if (command.type === EXIT) {
         process.exit(0);
     } else if (command.type === LIST_ALL) {
@@ -32,7 +34,7 @@ function processCommand(bank) {
     }
 }
 
-// PSEUDO: Add pseudo code
+
 function listAllAccounts(bank) {
     console.log('\nAll accounts:');
     let accountArray = Object.values(bank.accounts);
@@ -64,9 +66,7 @@ function listAllAccounts(bank) {
     */
 }
 
-// PSEUDO: add pseudocode
 function listOneAccount(owner, bank) {
-    // TODO : debug log 
     const account = bank.accounts[owner];
     if (account !== undefined) {
         // Get the transactions sorted in date order
@@ -103,17 +103,6 @@ function listOneAccount(owner, bank) {
     }
 }
 
-// TODO : info log a startup message
-console.log('\nProcessing transactions...');
+logger.info('SupportBank starting up');
+new ConsoleRunner().run();
 
-// PSEUDO : add pseudo code
-const transactions2014 = getCSVTransactions('resources/Transactions2014.csv', 'utf-8');
-const transactions2015 = getCSVTransactions('resources/DodgyTransactions2015.csv', 'utf-8');
-
-const bank = new Bank();
-bank.loadTransactions(transactions2014, transactions2015);
-
-displayWelcomeMessage();
-while (true) {
-    processCommand(bank);
-}

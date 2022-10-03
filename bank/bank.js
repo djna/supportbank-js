@@ -10,7 +10,6 @@ export default function Bank() {
     // Receives one or more lists of transactions
     // Stores the transactions as a list of accounts with their transactions
 
-    // PSEUDO : ADD pseudo code
     this.loadTransactions = function(...transactionLists) {
 
         for ( let i = 0; i < transactionLists.length; i++){
@@ -28,18 +27,20 @@ export default function Bank() {
     
     }
 
-    // PSEUDO : add pseudocode
     this.getOrCreateAccount = function(owner) {
         return this.accounts[owner] || (this.accounts[owner] = new Account(owner));
     }
 
-    // PSEUDO : add pseudocode
     this.addTransaction = function(transaction) {
-        // TODO : debug log adding a transaction
+        
         let fromAccount = this.getOrCreateAccount(transaction.from);
         fromAccount.addOutgoingTransaction(transaction);
 
         let toAccount = this.getOrCreateAccount(transaction.to);
         toAccount.addIncomingTransaction(transaction);
+    }
+
+    this.addTransactions = function(transactions) {
+        transactions.forEach(transaction => this.addTransaction(transaction));
     }
 }

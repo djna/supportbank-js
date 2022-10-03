@@ -73,5 +73,6 @@
     "cSpell.words": [
         "dindex"
     ],
+    "todo-tree.tree.scanMode": "workspace",
     
 }
